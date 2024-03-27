@@ -23,10 +23,16 @@ public class NameController {
     @PostMapping("/user")
     public String getUsernameByPost(@RequestBody User user, HttpServletRequest request) {
         String accessKey = request.getHeader("accessKey");
-        String secretKey = request.getHeader("secretKey");
-        if(!"yupi".equals(accessKey) || !"abcdefgh".equals(secretKey)){
+        String nonce = request.getHeader("nonce");
+        String timestamp = request.getHeader("timestamp");
+        String sign = request.getHeader("sign");
+        String body = request.getHeader("body");
+
+        if(!"yupi".equals(accessKey)){
             throw new RuntimeException("无权限");
         }
+        //todo 随机数的校验
+        //todo 时间不能超过5min
         user.setUserName("段元哲");
         return "POST 用户名字是" + user.getUserName();
     }
