@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.zheapiclientsdk.client.ZheApiClient;
 import com.example.zheapiclientsdk.model.User;
+import com.google.gson.Gson;
 import com.yupi.project.annotation.AuthCheck;
 import com.yupi.project.common.*;
 import com.yupi.project.constant.CommonConstant;
 import com.yupi.project.exception.BusinessException;
 import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoAddRequest;
+import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoInvokeRequest;
 import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoQueryRequest;
 import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoUpdateRequest;
 import com.yupi.project.model.entity.InterfaceInfo;
@@ -257,5 +259,40 @@ public class InterfaceInfoController {
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
     }
+    /**
+     * 在线调用接口
+     *
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                     HttpServletRequest request) {
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = interfaceInfoInvokeRequest.getId();
+        // 判断是否存在
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+        if (interfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        //判断接口的状态
+        if(interfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口已关闭");
+        }
+        //调用
+        com.yupi.project.model.entity.User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        ZheApiClient zheApiClient = new ZheApiClient(accessKey, secretKey);
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        Gson gson = new Gson();
+        User user = gson.fromJson(userRequestParams, User.class);
+        String usernameByPost = zheApiClient.getUsernameByPost(user);
+        return ResultUtils.success(usernameByPost);
+    }
+
 
 }

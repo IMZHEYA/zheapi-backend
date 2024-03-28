@@ -51,6 +51,7 @@ create table if not exists zheapi.`interface_info`
     `description` varchar(256) null comment '描述',
     `url` varchar(512) not null comment '接口地址',
     `requestHeader` text null comment '请求头',
+    `requestParams` text null comment '请求参数',
     `responseHeader` text null comment '响应头',
     `status` int default 0 not null comment '接口状态（0-关闭，1-开启）',
     `method` varchar(256) not null comment '请求类型',
