@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yupi.project.annotation.AuthCheck;
 import com.yupi.project.common.*;
 import com.yupi.project.constant.CommonConstant;
+import com.yupi.project.constant.UserConstant;
 import com.yupi.project.exception.BusinessException;
 import com.yupi.project.model.dto.userInterfaceInfo.UserInterfaceInfoAddRequest;
 import com.yupi.project.model.dto.userInterfaceInfo.UserInterfaceInfoQueryRequest;
@@ -47,6 +48,7 @@ public class userInterfaceInfoController {
      * @param request
      * @return
      */
+    @AuthCheck(mustRole  = UserConstant.ADMIN_ROLE)
     @PostMapping("/add")
     public BaseResponse<Long> addUserInterfaceInfo(@RequestBody UserInterfaceInfoAddRequest userInterfaceInfoAddRequest, HttpServletRequest request) {
         if (userInterfaceInfoAddRequest == null) {
@@ -73,6 +75,7 @@ public class userInterfaceInfoController {
      * @param request
      * @return
      */
+    @AuthCheck(mustRole  = UserConstant.ADMIN_ROLE)
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteUserInterfaceInfo(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
@@ -100,6 +103,7 @@ public class userInterfaceInfoController {
      * @param request
      * @return
      */
+    @AuthCheck(mustRole  = UserConstant.ADMIN_ROLE)
     @PostMapping("/update")
     public BaseResponse<Boolean> updateUserInterfaceInfo(@RequestBody UserInterfaceInfoUpdateRequest UserInterfaceInfoUpdateRequest,
                                             HttpServletRequest request) {
@@ -131,6 +135,7 @@ public class userInterfaceInfoController {
      * @param id
      * @return
      */
+    @AuthCheck(mustRole  = UserConstant.ADMIN_ROLE)
     @GetMapping("/get")
     public BaseResponse<UserInterfaceInfo> getUserInterfaceInfoById(long id) {
         if (id <= 0) {
@@ -165,6 +170,7 @@ public class userInterfaceInfoController {
      * @param request
      * @return
      */
+    @AuthCheck(mustRole  = UserConstant.ADMIN_ROLE)
     @GetMapping("/list/page")
     public BaseResponse<Page<UserInterfaceInfo>> listUserInterfaceInfoByPage(UserInterfaceInfoQueryRequest UserInterfaceInfoQueryRequest, HttpServletRequest request) {
         if (UserInterfaceInfoQueryRequest == null) {
