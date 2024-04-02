@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.zheapiclientsdk.client.ZheApiClient;
 import com.example.zheapiclientsdk.model.User;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yupi.project.annotation.AuthCheck;
 import com.yupi.project.common.*;
 import com.yupi.project.constant.CommonConstant;
@@ -289,7 +290,8 @@ public class InterfaceInfoController {
         ZheApiClient zheApiClient = new ZheApiClient(accessKey, secretKey);
         String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
         Gson gson = new Gson();
-        User user = gson.fromJson(userRequestParams, User.class);
+        User user = new User();
+        user = gson.fromJson(userRequestParams, new TypeToken<User>(){}.getType());
         String usernameByPost = zheApiClient.getUsernameByPost(user);
         return ResultUtils.success(usernameByPost);
     }
