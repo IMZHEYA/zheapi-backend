@@ -2,6 +2,8 @@ package com.yupi.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.zheapicommon.model.entity.User;
+import com.example.zheapicommon.model.entity.UserInterfaceInfo;
 import com.yupi.project.annotation.AuthCheck;
 import com.yupi.project.common.*;
 import com.yupi.project.constant.CommonConstant;
@@ -11,7 +13,6 @@ import com.yupi.project.model.dto.userInterfaceInfo.UserInterfaceInfoAddRequest;
 import com.yupi.project.model.dto.userInterfaceInfo.UserInterfaceInfoQueryRequest;
 import com.yupi.project.model.dto.userInterfaceInfo.UserInterfaceInfoUpdateRequest;
 
-import com.yupi.project.model.entity.UserInterfaceInfo;
 import com.yupi.project.service.UserInterfaceInfoService;
 import com.yupi.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +59,7 @@ public class userInterfaceInfoController {
         BeanUtils.copyProperties(userInterfaceInfoAddRequest, userinterfaceInfo);
         // 校验
         userinterfaceInfoService.validUserInterfaceInfo(userinterfaceInfo, true);
-        com.yupi.project.model.entity.User loginUser = userService.getLoginUser(request);
+        User loginUser = userService.getLoginUser(request);
         userinterfaceInfo.setUserId(loginUser.getId());
         boolean result = userinterfaceInfoService.save(userinterfaceInfo);
         if (!result) {
@@ -81,7 +82,7 @@ public class userInterfaceInfoController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        com.yupi.project.model.entity.User user = userService.getLoginUser(request);
+        User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
         UserInterfaceInfo oldUserInterfaceInfo = userinterfaceInfoService.getById(id);
@@ -114,7 +115,7 @@ public class userInterfaceInfoController {
         BeanUtils.copyProperties(UserInterfaceInfoUpdateRequest, userinterfaceInfo);
         // 参数校验
         userinterfaceInfoService.validUserInterfaceInfo(userinterfaceInfo, false);
-        com.yupi.project.model.entity.User user = userService.getLoginUser(request);
+        User user = userService.getLoginUser(request);
         long id = UserInterfaceInfoUpdateRequest.getId();
         // 判断是否存在
         UserInterfaceInfo oldUserInterfaceInfo = userinterfaceInfoService.getById(id);

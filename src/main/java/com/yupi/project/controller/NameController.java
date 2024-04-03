@@ -1,7 +1,7 @@
 package com.yupi.project.controller;
 
 
-import com.yupi.project.model.entity.User;
+import com.example.zheapicommon.model.entity.User;
 import com.yupi.project.utils.SignUtils;
 import org.springframework.web.bind.annotation.*;
 

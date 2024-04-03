@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.zheapiclientsdk.client.ZheApiClient;
 import com.example.zheapiclientsdk.model.User;
+import com.example.zheapicommon.model.entity.InterfaceInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yupi.project.annotation.AuthCheck;
@@ -14,9 +15,7 @@ import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoAddRequest;
 import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoInvokeRequest;
 import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoQueryRequest;
 import com.yupi.project.model.dto.interfaceInfo.InterfaceInfoUpdateRequest;
-import com.yupi.project.model.entity.InterfaceInfo;
 import com.yupi.project.model.enums.InterfaceInfoStatusEnum;
-import com.yupi.project.service.InterfaceInfoService;
 import com.yupi.project.service.InterfaceInfoService;
 import com.yupi.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +61,7 @@ public class InterfaceInfoController {
         BeanUtils.copyProperties(InterfaceInfoAddRequest, interfaceInfo);
         // 校验
         interfaceInfoService.validInterfaceInfo(interfaceInfo, true);
-        com.yupi.project.model.entity.User loginUser = userService.getLoginUser(request);
+        com.example.zheapicommon.model.entity.User loginUser = userService.getLoginUser(request);
         interfaceInfo.setUserId(loginUser.getId());
         boolean result = interfaceInfoService.save(interfaceInfo);
         if (!result) {
@@ -84,7 +83,7 @@ public class InterfaceInfoController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        com.yupi.project.model.entity.User user = userService.getLoginUser(request);
+        com.example.zheapicommon.model.entity.User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
         InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
@@ -116,7 +115,7 @@ public class InterfaceInfoController {
         BeanUtils.copyProperties(InterfaceInfoUpdateRequest, interfaceInfo);
         // 参数校验
         interfaceInfoService.validInterfaceInfo(interfaceInfo, false);
-        com.yupi.project.model.entity.User user = userService.getLoginUser(request);
+        com.example.zheapicommon.model.entity.User user = userService.getLoginUser(request);
         long id = InterfaceInfoUpdateRequest.getId();
         // 判断是否存在
         InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
@@ -284,7 +283,7 @@ public class InterfaceInfoController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口已关闭");
         }
         //调用
-        com.yupi.project.model.entity.User loginUser = userService.getLoginUser(request);
+        com.example.zheapicommon.model.entity.User loginUser = userService.getLoginUser(request);
         String accessKey = loginUser.getAccessKey();
         String secretKey = loginUser.getSecretKey();
         ZheApiClient zheApiClient = new ZheApiClient(accessKey, secretKey);
