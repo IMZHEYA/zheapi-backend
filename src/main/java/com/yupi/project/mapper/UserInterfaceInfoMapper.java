@@ -2,6 +2,9 @@ package com.yupi.project.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.zheapicommon.model.entity.UserInterfaceInfo;
+import com.yupi.project.model.vo.InterfaceInfoVO;
+
+import java.util.List;
 
 /**
 * @author 13425
@@ -10,6 +13,8 @@ import com.example.zheapicommon.model.entity.UserInterfaceInfo;
 * @Entity com.yupi.project.model.entity.UserInterfaceInfo
 */
 public interface UserInterfaceInfoMapper extends BaseMapper<UserInterfaceInfo> {
+
+    List<UserInterfaceInfo> listTopInvokeInterfaceInfo(int limit);
 
 }
 
