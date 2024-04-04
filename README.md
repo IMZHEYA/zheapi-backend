@@ -65,6 +65,37 @@
 3. 用户可以调用接口
 
 4. 管理员可以查看接口调用次数分析图
+   
+## 效果展示
+
+### 登录页面
+
+![image](https://github.com/Serendipityzhezi/zheapi-backend/assets/122675076/f84fd2b5-6a6a-4fd6-a89e-b43c5fa7a422)
+
+### 主界面
+
+![image](https://github.com/Serendipityzhezi/zheapi-backend/assets/122675076/a87727b6-5f34-4ad6-ab54-07e555c91288)
+
+
+### 调用接口
+
+可以调用已发布的接口
+
+![image](https://github.com/Serendipityzhezi/zheapi-backend/assets/122675076/10f3cee0-2664-41d8-8434-d95da04b92dd)
+
+
+### 管理页
+
+可以新建，删除，修改，查询，发布，下线接口
+
+![image](https://github.com/Serendipityzhezi/zheapi-backend/assets/122675076/9d4feb53-de32-4a12-a6b1-673b5c70db2c)
+
+
+### 接口分析页
+
+可分析出调用次数TOP3的接口
+
+![image](https://github.com/Serendipityzhezi/zheapi-backend/assets/122675076/d45f73f8-d588-4440-a372-facd9ba35811)
 
 
  
